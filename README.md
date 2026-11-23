@@ -1,4 +1,4 @@
-# qbkd: query-budgeted data-free KD + mode connectivity
+# Qbkd: query-budgeted data-free KD + mode connectivity
 
 Pipeline for the project: distil a pretrained ResNet-34 into a ResNet-18 using a **fixed number of teacher queries**, with no CIFAR training images. Then connect two students with a low-loss curve (Garipov et al., 2018) **without spending any new queries**.
 
