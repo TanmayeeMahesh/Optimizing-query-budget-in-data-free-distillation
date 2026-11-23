@@ -1,0 +1,128 @@
+{
+  "name": "c10_r34_r18",
+  "dataset": "cifar10",
+  "num_classes": 10,
+  "paths": {
+    "root": "./runs",
+    "data": ".data"
+  },
+  "teacher": {
+    "kind": "hf_timm_cifar",
+    "repo": "edadaltocg/resnet34_cifar10",
+    "arch": "resnet34"
+  },
+  "student": {
+    "arch": "resnet18_cifar"
+  },
+  "store_logits_dtype": "float16",
+  "query": {
+    "budget": 200000,
+    "seed": 0,
+    "image_size": 32,
+    "batch_size": 512,
+    "chunk": 100000,
+    "num_workers": 4,
+    "sources": {
+      "leaves": {
+        "weight": 0.5,
+        "views_per_base": 1
+      },
+      "pink2": {
+        "type": "pink",
+        "alpha": 2.0,
+        "weight": 0.5,
+        "views_per_base": 1
+      },
+      "uniform": {
+        "weight": 0
+      },
+      "gauss": {
+        "weight": 0
+      },
+      "gauss_imgstats": {
+        "weight": 0
+      },
+      "pink1": {
+        "type": "pink",
+        "alpha": 1.0,
+        "weight": 0
+      },
+      "lowfreq4": {
+        "type": "lowfreq",
+        "grid": 4,
+        "weight": 0
+      },
+      "svhn": {
+        "type": "torchvision",
+        "dataset": "svhn",
+        "split": "train",
+        "weight": 0,
+        "views_per_base": 5
+      },
+      "stl10_unlab": {
+        "type": "torchvision",
+        "dataset": "stl10",
+        "split": "unlabeled",
+        "weight": 0,
+        "views_per_base": 2
+      }
+    },
+    "augment": {
+      "name": "strong",
+      "randaugment": {
+        "num_ops": 4,
+        "magnitude": 14
+      },
+      "elastic_p": 0.5,
+      "invert_p": 0.5
+    },
+    "mixup": {
+      "p": 1.0,
+      "lam": "uniform",
+      "beta_alpha": 1.0
+    }
+  },
+  "monitor": {
+    "n": 5000,
+    "source": {
+      "type": "torchvision",
+      "dataset": "cifar100",
+      "split": "test"
+    }
+  },
+  "train": {
+    "epochs": 200,
+    "batch_size": 256,
+    "lr": 0.1,
+    "momentum": 0.9,
+    "nesterov": false,
+    "weight_decay": 0.0005,
+    "warmup_epochs": 0,
+    "temperature": 20,
+    "alpha": 1.0,
+    "sampler": "uniform",
+    "student_aug": "none",
+    "holdout": 0,
+    "amp": true,
+    "num_workers": 4,
+    "seed": 0,
+    "save_every": 20,
+    "eval_test": "final"
+  },
+  "connect": {
+    "endpoints": "auto",
+    "kind": "linear",
+    "num_bends": 3,
+    "epochs": 50,
+    "lr": 0.03,
+    "t_grid": 21,
+    "bn_batches": 100,
+    "eval_store_n": 20000,
+    "eval_test": true,
+    "seed": 0
+  },
+  "_endpoints": [
+    "runs/c10_r34_r18/students/b200000_37a74cce_T20_a1_s1/final.pt",
+    "runs/c10_r34_r18/students/b200000_37a74cce_T20_a1_s0/final.pt"
+  ]
+}

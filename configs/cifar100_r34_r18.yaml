@@ -1,0 +1,11 @@
+# Same pipeline, CIFAR-100. Everything not listed is inherited.
+_base_: cifar10_r34_r18.yaml
+name: c100_r34_r18
+dataset: cifar100
+num_classes: 100
+teacher:
+  kind: hf_timm_cifar
+  repo: edadaltocg/resnet34_cifar100      # 79.78% test accuracy (model card), MIT
+  arch: resnet34
+train:
+  epochs: 240
